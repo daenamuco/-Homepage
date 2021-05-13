@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="kr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>대나무 뉴스 · 최신</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='/css/news.css') }}" type="text/css" rel="stylesheet">
+  </head>
+  <body>
+    
+    <div class="container">
+      <header class="blog-header py-3">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+          <div class="col-4 pt-1">
+            <a class="link-secondary" href="#">구독하기</a>
+          </div>
+          <div class="col-4 text-center">
+            <a class="blog-header-logo btn-outline-secondary text-light bg-primary p-1 px-4 border rounded-pill" href="{{ url_for('core.home') }}">대나무</a>
+          </div>
+          <div class="col-4 d-flex justify-content-end align-items-center">
+            {% if current_user.is_authenticated %}
+              <a class="btn btn-sm btn-outline-secondary me-2" href="{{ url_for('core.community') }}">커뮤니티</a>
+              <a class="btn btn-sm btn-outline-secondary me-2" href="{{ url_for('users.account') }}">MY 대나무</a>
+              <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('users.logout') }}">로그아웃</a>
+            {% else %}
+              <a class="btn btn-sm btn-outline-secondary me-2" href="{{ url_for('users.login') }}">로그인</a>
+              <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('users.register') }}">회원가입</a>
+            {% endif %}
+          </div>
+        </div>
+      </header>
+
+      <div class="nav-scroller py-1 my-2">
+        <nav class="nav d-flex justify-content-evenly">
+          <a class="p-2 link-secondary" target="_blank" href="http://www.mediatoday.co.kr/">미디어</a>
+          <a class="p-2 link-secondary" target="_blank" href="https://www.hani.co.kr/">한겨레</a>
+          <a class="p-2 link-secondary" target="_blank" href="https://www.khan.co.kr/">경향</a>
+          <a class="p-2 link-secondary" target="_blank" href="https://www.seoul.co.kr/">서울</a>
+          <a class="p-2 link-secondary" target="_blank" href="https://www.hankookilbo.com/">한국</a>
+          <a class="p-2 link-secondary"target="_blank" href="https://www.chosun.com/">조선</a>
+          <a class="p-2 link-secondary" target="_blank" href="https://joongang.joins.com/">중앙</a>
+          <a class="p-2 link-secondary" target="_blank" href="https://www.nytimes.com/">NY Times</a>
+          <a class="p-2 link-secondary" target="_blank" href="https://www.wsj.com/news/latest-headlines?mod=wsjheader">WSJ</a>
+        </nav>
+      </div>
+    </div>
+
+  <main class="container">
+    <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+      <div class="col-md-6 px-0">
+        <h1 class="display-4 fst-italic">Breaking News</h1>
+        <p class="lead my-3">대나무의 강력한 크롤링 엔진은 최신 뉴스를 신속하게 전달합니다.</p>
+        <p class="lead mb-0"><a href="#" class="text-white fw-bold">대나무 개발자들</a></p>
+      </div>
+    </div>
+
+    <div class="row mb-2">
+      {% for x in news %}
+      <div class="col-md-6">
+        <a class="text-decoration-none" target="_blank" href="{{x.url}}">
+          <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative">
+            <div class="col p-4 d-flex flex-column position-static overflow-hidden">
+              <strong class="d-inline-block mb-2 text-primary">{{x.paper}}</strong>
+              <h4 class="mb-3 text-dark">{{x.headline}}</h4>
+              <div class="mb-1 text-muted">날짜</div>
+              <p class="card-text mb-auto text-dark"></p>
+            </div>
+            <div class="col-auto d-none d-lg-block overflow-hidden">
+              <img class="bd-placeholder-img border rounded" width="200px" height="200px" src="{{x.scr}}">
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="row g-5">
+      <div class="col-md-8">
+        <h3 class="pb-4 mb-4 fst-italic border-bottom">
+          혁신의 시작
+        </h3>
+
+        <article class="blog-post">
+          <h2 class="blog-post-title">주식회사 대나무</h2>
+          <p class="blog-post-meta">2021년 5월 1일 by <a href="#">HKSimon</a></p>
+          <br>
+          <h2>Blockquote 예시</h2>
+          <p>This is an example blockquote in action:</p>
+          <blockquote class="blockquote">
+            <p>Quote된 글자 예시</p>
+          </blockquote>
+          <br>
+          <hr>
+          <br>
+          <h2>dl, dt, dd 사용예시</h2>
+          <br>
+          <dl>
+            <dt>HyperText Markup Language (HTML)</dt>
+            <dd>The language used to describe and define the content of a Web page</dd>
+            <dt>Cascading Style Sheets (CSS)</dt>
+            <dd>Used to describe the appearance of Web content</dd>
+            <dt>JavaScript (JS)</dt>
+            <dd>The programming language used to build advanced Web sites and applications</dd>
+          </dl>
+          <br>
+          <hr>
+          <br>
+          <h2>Inline HTML elements</h2>
+          <p>HTML defines a long list of available inline tags</p>
+          <ul>
+            <li><strong>To bold text</strong>, use <code class="language-plaintext highlighter-rouge">&lt;strong&gt;</code>.</li>
+            <li><em>To italicize text</em>, use <code class="language-plaintext highlighter-rouge">&lt;em&gt;</code>.</li>
+            <li>Abbreviations, like <abbr title="HyperText Markup Langage">HTML</abbr> should use <code class="language-plaintext highlighter-rouge">&lt;abbr&gt;</code>, with an optional <code class="language-plaintext highlighter-rouge">title</code> attribute for the full phrase.</li>
+            <li>Citations, like <cite>— Mark Otto</cite>, should use <code class="language-plaintext highlighter-rouge">&lt;cite&gt;</code>.</li>
+            <li><del>Deleted</del> text should use <code class="language-plaintext highlighter-rouge">&lt;del&gt;</code> and <ins>inserted</ins> text should use <code class="language-plaintext highlighter-rouge">&lt;ins&gt;</code>.</li>
+            <li>Superscript <sup>text</sup> uses <code class="language-plaintext highlighter-rouge">&lt;sup&gt;</code> and subscript <sub>text</sub> uses <code class="language-plaintext highlighter-rouge">&lt;sub&gt;</code>.</li>
+          </ul>
+          <pre><code>Example code block</code></pre>
+        </article>
+        <hr>
+        <article class="blog-post">
+          <br>
+          <h3>표 예시</h3>
+          <br>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>이름</th>
+                <th>Up</th>
+                <th>Down</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>박준홍</td>
+                <td>29,348,750</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>허원재</td>
+                <td>27,522,345</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>김현수</td>
+                <td>28,493,123</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>황규성</td>
+                <td>999,999,999</td>
+                <td>0</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>합계</td>
+                <td>1,085,364,217</td>
+                <td>0</td>
+              </tr>
+            </tfoot>
+          </table>
+        </article>
+
+        <nav class="blog-pagination" aria-label="Pagination">
+          <a class="btn btn-outline-primary" href="#">Older</a>
+          <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
+        </nav>
+
+      </div>
+
+      <div class="col-md-4">
+        <div class="position-sticky" style="top: 2rem;">
+          <div class="p-4 mb-3 bg-light rounded">
+            <h4 class="fst-italic">About</h4>
+            <p class="mb-0">주식회사 대나무는 무지성 투자자들이 보다 전략적인 방법을 통해 투자할 수 있도록 가장 가까운 곳에서 도와드립니다.</p>
+          </div>
+
+          <div class="p-4">
+            <h4 class="fst-italic">History</h4>
+            <ol class="list-unstyled mb-0">
+              <li><a href="#">2021년 3월</a></li>
+              <li><a href="#">2021년 4월</a></li>
+              <li><a href="#">2021년 5월</a></li>
+            </ol>
+          </div>
+
+          <div class="p-4">
+            <h4 class="fst-italic">Contact</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">GitHub</a></li>
+              <li><a href="#">Instagram</a></li>
+              <li><a href="#">Facebook</a></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="blog-footer">
+    <p>&copy; 2021 주식회사 대나무. All rights Reserved.</p>
+    <p>
+      <a href="#">맨 위로</a>
+    </p>
+  </footer>
+
+  </body>
+</html>

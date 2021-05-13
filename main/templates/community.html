@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <a class="btn btn-sm btn-outline-secondary me-2" href="{{ url_for('core.home') }}">홈으로</a>    
+        <a class="btn btn-sm btn-outline-secondary me-2" href="{{ url_for('posts.new_post') }}">글쓰기</a>    
+        {% for post in posts.items %}
+        <!-- pagination object이기 때문에 posts.items 사용 -->
+            <article class="media content-section">
+                <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" />
+                <div class="media-body">
+                    <div class="article-metadata">
+                        <a href="{{ url_for('users.user_posts', username=post.author.username) }}" class="mr-2">{{ post.author.username }}</a>
+                        <small class="text-muted">{{ post.date_posted.strftime('%Y. %m. %d %H:%M:%S') }}</small>
+                    </div>
+                    <h2><a href="{{ url_for('posts.post', post_id=post.id)}}" class="article-title">{{ post.title }}</a></h2>
+                    <p class="article-content">{{ post.content }}</p>
+                </div>
+            </article>
+        {% endfor %}
+
+        <!-- 이 부분은 pagination 부분 -->
+        {% for page_num in posts.iter_pages(left_edge=3, right_edge=3, left_current=1, right_current=2) %}
+        <!-- edge는 처음과 끝에 표시할 페이지 넘버수, left current는 현재 페이지에서 몇개의 왼쪽 페이지 표시할건지, right_current는 현재 페이지를 포함하기 때문에 2를하면 1개가 보임 -->
+            {% if page_num %}
+                {% if posts.page == page_num %}
+                <!-- 현재 페이지가 해당 페이지 넘버에 해당하면 highlight 하기(btn에서 outline 없앰) -->
+                    <a href="{{ url_for('core.community', page=page_num) }}" class="btn btn-info mb-4">{{ page_num }}</a>
+                {% else %}
+                    <a href="{{ url_for('core.community', page=page_num) }}" class="btn btn-outline-info mb-4">{{ page_num }}</a>
+                {% endif %}
+            {% else %}
+                ...
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock content %}

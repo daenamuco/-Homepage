@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content %}
+    <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" />
+        <div class="media-body">
+            <div class="article-metadata">
+                <a href="{{ url_for('users.user_posts', username=post.author.username) }}" class="mr-2">{{ post.author.username }}</a>
+                <small class="text-muted">{{ post.date_posted.strftime('%Y. %m. %d %H:%M:%S') }}</small>
+                {% if post.author == current_user %}
+                    <div>
+                        <a class="btn btn-secondary btn-sm my-1" href="{{ url_for('posts.update_post', post_id=post.id) }}">Update</a>
+                        <button type="button" class="btn btn-danger btn-sm m-1" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                        <!-- data-bs-target은 하단 modal의 이름을 지칭함 -->
+                    </div>
+                {% endif %}
+            </div>
+            <h2 class="article-title">{{ post.title }}</h2>
+            <p class="article-content">{{ post.content }}</p>
+        </div>
+    </article>
+
+    <!-- Modal / 상단 button에서 변경한 data-bs-target의 이름으로 id와 label을 변경해야함-->
+    <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">포스트 삭제하기</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    정말로 삭제하시겠습니까?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <form action="{{ url_for('posts.delete_post', post_id=post.id) }}" method="POST">
+                        <input class="btn btn-danger" type="submit" value="삭제">
+                    </form>
+                    <!-- 폼으로 둘러서 POST방식으로 전송하는 input을 생성함 -> delete_post로 이어짐 -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
